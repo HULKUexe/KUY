@@ -3872,59 +3872,6 @@ elseif Third_World then
 end
 end
 
-function Quest()
-    if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
-        local args = {
-            [1] = "AbandonQuest"
-        }
-        
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-    end
-
-    if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-    else
-        wait(1.5)
-    local Distance = (CFrameTweenQuest - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
-    if Distance <= 2000 then
-        Speed = 350
-    else
-    Speed = 250
-    end
-    tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear)
-    tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrameQuest})
-    tween:Play()
-    wait(Distance/Speed)
-    wait(1)
-    local args = {
-        [1] = "StartQuest",
-        [2] = NameQuest,
-        [3] = LevelQuest
-    }
-    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-    wait(1.5)
-    end
-end
-
-function Tp()
-    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-        if v.Name == Mon and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then            
-            local HP = v.Humanoid.MaxHealth*50/100
-            Distance = (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-            Speed = 250
-            if HP <= v.Humanoid.Health then
-            tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear)            
-            tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame*CFrame.new(0,0,25)})
-            else
-            tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear)            
-            tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame*CFrame.new(0,20,0)})
-            end
-            tween:Play()
-            else
-            end
-    end
-end
-
-
  
 function Hitbox()
     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -3990,73 +3937,6 @@ Tab1:Toggle("Auto Farm Level",false,function(t)
     end
 end)
 
-
-local RigC = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework) 
-local Rig = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.CameraShaker)
-
-spawn(function()
-pcall(function()
-	
-    game:GetService("RunService").Heartbeat:Connect(function()
-        if _G.AutoFarm then
-            if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-            game:GetService'VirtualUser':CaptureController()
-            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-            game:GetService'VirtualUser':CaptureController()
-            game:GetService('VirtualUser'):ClickButton1(Vector2.new(851, 158), game:GetService("Workspace").Camera.CFrame)
-            RigC.activeController.hitboxMagnitude = 80
-            Rig.CameraShakeInstance.CameraShakeState = {FadingIn = 3,FadingOut =  2,Sustained = 0,Inactive = 1} 
-            RigC.activeController.timeToNextAttack = 1
-            elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-            end
-    end
-end)
-end)
-end)
-
-
-Tab1:Toggle("Fast Attack",_G.FastAttk,function(value)
-    _G.FastAttk = value
-end)
-
-local CombatFrameworkR = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework) 
-
-local CameraShakerR = require(game.ReplicatedStorage.Util.CameraShaker)
-
-spawn(function()
-	for i = 1,math.huge do
-		game:GetService("RunService").Heartbeat:wait()
-		if _G.FastAttk then
-			pcall(function()
-					CameraShakerR:Stop()
-					CombatFrameworkR.activeController.attacking = false
-					CombatFrameworkR.activeController.timeToNextAttack = 0
-					CombatFrameworkR.activeController.increment = 3
-					CombatFrameworkR.activeController.hitboxMagnitude = 50
-			end)
-		end
-		game:GetService("RunService").Heartbeat:wait()
-	end
-end)
-
-spawn(function()
-	game:GetService("RunService").Heartbeat:connect(function()
-		pcall(function()
-			if _G.FastAttk then
-					VirtualUser:CaptureController()
-					VirtualUser:ClickButton1(Vector2.new(851, 158), game:GetService("Workspace").Camera.CFrame)
-			end
-		end)
-	end)
-	game:GetService("RunService").Heartbeat:connect(function()
-		pcall(function()
-			if _G.FastAttk then
-					VirtualUser:CaptureController()
-					VirtualUser:ClickButton1(Vector2.new(851, 158), game:GetService("Workspace").Camera.CFrame)
-			end
-		end)
-	end)
-end)
 
 
 
