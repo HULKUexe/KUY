@@ -3923,20 +3923,9 @@ function Tp()
             end
     end
 end
-spawn(function()
-    game:GetService("RunService").Heartbeat:Connect(function()
-        if _G.AutoFarm or _G.AutoRengoku or _G.elitehunt or _G.AutoNew or _G.Pole or _G.AutoThird or _G.Auto_Farm_Bone then
-            pcall(function()
-            game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
-            end)
-        end
-    end)
-end)
-
 
 
  
-
 function Hitbox()
     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
         if v.Name == Mon then
@@ -3967,29 +3956,7 @@ function BringMob()
 end
 
 
-function Click()
-    game:GetService'VirtualUser':CaptureController()
-    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-end
 
-function AutoHaki()
-    if game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
-    else
-    local args = {
-        [1] = "Buso"
-    }
-    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-end
-end
-
-_G.SelectToolWeapon = nil
-function EquipWeapon(ToolSe)
-   if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
-       getgenv().tool = game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe)
-       wait(.1)
-       game.Players.LocalPlayer.Character.Humanoid:EquipTool(tool)
-   end
-end
 
 Tab1:Toggle("Auto Farm Level",false,function(t)
     _G.AutoFarm = t
@@ -4107,31 +4074,3 @@ function TP(P1,P2)
     wait(Distance/Speed)
     _G.Clip = false
 end
-
-
-
-Wapon = {}
-for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do  
-    if v:IsA("Tool") then
-        table.insert(Wapon ,v.Name)
-    end
-end
- local SelectWeapona = Tab1:Dropdown("Select Weapon",Wapon,function(Value)
-    _G.SelectToolWeapon = Value
-    SelectToolWeaponOld = Value
-end)
-Tab1:Button("Refresh Weapon",function()
-    SelectWeapona:Clear()
-    Wapon = {}
-    for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do  
-        if v:IsA("Tool") then
-            SelectWeapona:Add(v.Name)
-        end
-    end
-    for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do  
-        if v:IsA("Tool") then
-            SelectWeapona:Add(v.Name)
-        end
-    end
-end)
-
